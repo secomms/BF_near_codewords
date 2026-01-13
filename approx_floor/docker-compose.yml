@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  sagemath:
+    image: sagemath/sagemath:latest
+    container_name: sagemath
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./floor:/home/sage/floor
+      - ./start.sh:/home/sage/start.sh
+    command: /home/sage/start.sh
+
