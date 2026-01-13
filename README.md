@@ -12,7 +12,7 @@ All the software is written in C in order to achieve high computational performa
 The repository is organized as follows:
 
 - `simulator`: Contains the complete source code of the simulator together with the simulation results.
-- `approx_floor: Contains the code and configuration needed to estimate the error floor, following the methodology described in the paper.
+- `approx_floor`: Contains the code and configuration needed to estimate the error floor, following the methodology described in the paper.
 
 
 The layout of the repository is the following:
