@@ -70,6 +70,7 @@ static inline void bf_max(DecodingMatrix* H, DecodingParams* params, const int n
 				counters[ell] += d;
 			}
 		}
+
         //at the the end of the iteration update the hamming weight
         hw = hamming_weight(params->syndrome);
 		decode_enhance_lookup(H, params, &lookup_used, &hw);

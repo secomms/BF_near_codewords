@@ -249,7 +249,7 @@ void print_bitarray(const uint8_t *arr, size_t n_bits) {
  * @param num_decodes           Total number of decoding attempts performed so far.
  * @param elapsed               Total elapsed time (in seconds) for executing `num_decodes` attempts.
  */
-void update_out_file_mp(const int t, const int num_errors, const int num_errors_improved, const int num_decodes, double elapsed){
+void update_out_file_mp(const int t, const int num_errors, const int num_errors_improved, const int num_errors_new, const int num_decodes, double elapsed){
 	
     char file_out[100];
     char sim_type[20];
@@ -273,11 +273,12 @@ void update_out_file_mp(const int t, const int num_errors, const int num_errors_
     double time_taken = (elapsed)/(num_decodes); 
     float DFR = (float)num_errors/(float)num_decodes;
     float DFR_improved = (float)num_errors_improved/(float)num_decodes;		
+    float DFR_new = (float)num_errors_new/(float)num_decodes;		
 
     #if SIMULATION_TYPE == 0
-        printf("\n t = %d DFR = %e DFR(LU) = %e (time for one decode = %f s)", t, DFR, DFR_improved, time_taken);
+        printf("\n t = %d DFR = %e DFR(LU) = %e, DFR(Half) = %e, (time for one decode = %f s)", t, DFR, DFR_improved, DFR_new, time_taken);
     #else
-        printf("\n u = %d DFR = %e DFR(LU) = %e (time for one decode = %f s)", t, DFR, DFR_improved, time_taken);
+        printf("\n u = %d DFR = %e DFR(LU) = %e, DFR(Half) = %e, (time for one decode = %f s)", t, DFR, DFR_improved, DFR_new, time_taken);
     #endif
 
     //Update results file
@@ -287,7 +288,7 @@ void update_out_file_mp(const int t, const int num_errors, const int num_errors_
     fclose(fptr_out);    
 }
 
-void update_log_file_mp(const int t, const int num_errors, const int num_errors_improved, const int num_decodes, int num_tx){
+void update_log_file_mp(const int t, const int num_errors, const int num_errors_improved, const int num_errors_new, const int num_decodes, int num_tx){
 
 	//Format: n_r_v_SEED    
     //create file name
@@ -321,7 +322,7 @@ void update_log_file_mp(const int t, const int num_errors, const int num_errors_
 	#if SIMULATION_TYPE == 0
 		fprintf(fptr_log, "\nt = %d, Num Tx = %d, Num Errors = %d, Num Errors Improved = %d, DFR =  %e, DFR Improved = %e  (%d-%02d-%02d %02d:%02d:%02d)",t, num_tx, num_errors, num_errors_improved, (float)num_errors/(float)num_decodes, (float)num_errors_improved/(float)num_decodes, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 	#else
-		fprintf(fptr_log, "\nt = %d, u = %d, Num Tx = %d, Num Errors = %d, Num Errors Improved = %d, DFR =  %e, DFR Improved = %e  (%d-%02d-%02d %02d:%02d:%02d)",ERROR_WEIGHT, t, num_decodes, num_errors, num_errors_improved, (float)num_errors/(float)num_decodes, (float)num_errors_improved/(float)num_decodes, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+		fprintf(fptr_log, "\nt = %d, u = %d, Num Tx = %d, Num Errors = %d, Num Errors Improved = %d, Num Errors Half = %d, DFR =  %e, DFR Improved = %e, DFR Half = %e (%d-%02d-%02d %02d:%02d:%02d)",ERROR_WEIGHT, t, num_decodes, num_errors, num_errors_improved, num_errors_new, (float)num_errors_new/(float)num_decodes, (float)num_errors/(float)num_decodes, (float)num_errors_improved/(float)num_decodes, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 	#endif
 	
     fclose(fptr_log);    

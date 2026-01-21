@@ -14,6 +14,7 @@
 #include <omp.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <string.h>
 #include <sys/types.h>
 #include <time.h>
 
@@ -37,6 +38,29 @@ void setup_signal_handlers() {
     signal(SIGFPE,  signal_handler);
     signal(SIGILL,  signal_handler);
     signal(SIGBUS,  signal_handler);
+}
+
+int check_new_decoder(const int err_weight, int* estimated_vector, const unsigned long* target_vector){
+
+    size_t hw = 0;
+
+    for(int x = 0; x<err_weight;x++){
+        estimated_vector[target_vector[x]] ^= 1;
+    }
+
+    int ko_e1, ko_e2 = 0;
+    
+    for(int i=0; i < CODE_REDUNDANCY; i++){
+        if(estimated_vector[i] == 1) ko_e1 = 1;
+        if(estimated_vector[i + CODE_REDUNDANCY] == 1) ko_e2 = 1; 
+    }
+
+    if(ko_e1 && ko_e2) return 1;
+
+
+    return 0;
+
+
 }
 
 int check_solution(const int err_weight, int* estimated_vector, const unsigned long* target_vector){
@@ -127,6 +151,7 @@ int main(int argc, char* argv[]){
     SIM_LOOP {
         // local variable for the simulation with a fixed t 
 		int num_errors = 0, num_errors_improved = 0, num_decodes = 0;
+        int num_errors_new = 0;
         // start timestamp
         double start_time = omp_get_wtime();  
 
@@ -165,17 +190,24 @@ int main(int argc, char* argv[]){
                     case 4: new_bike_decoder(&H, data); break;
                 }
 
+
+
+                int* new_err = malloc(CODE_LENGTH*sizeof(int));
+                memcpy(new_err, data->err_estimated, CODE_LENGTH*sizeof(int));
+
                 int decode_ko          = ((data->residual[0] == 0) ? check_solution(t, data->err_estimated, data->err_support) : 1);
 				int decode_ko_improved = ((data->residual[1] == 0) ? check_solution(t, data->err_estimated_improved, data->err_support) : 1);
-                
+                int decode_ko_new      = check_new_decoder(t, new_err, data->err_support);
+
 
 				#pragma omp critical 
 				{
 					num_errors += decode_ko;
 					num_errors_improved += decode_ko_improved;
+                    num_errors_new += decode_ko_new;
 
 					if((decode_ko_improved)||((num_decodes%NUM_BACKUP)==0)) 
-                        UPDATE_LOG(num_errors, num_erros_impoved, num_decodes, my_decode_id);
+                        UPDATE_LOG(num_errors, num_erros_impoved, num_errors_new, num_decodes, my_decode_id);
 					
 				}
                 
@@ -186,7 +218,7 @@ int main(int argc, char* argv[]){
         }
         
 		double elapsed = omp_get_wtime() - start_time;
-		UPDATE_OUTPUT(num_errors, num_errors_improved, num_decodes, elapsed);
+		UPDATE_OUTPUT(num_errors, num_errors_improved, num_errors_new, num_decodes, elapsed);
     }
 
     printf("\nSimulation finished...\n");

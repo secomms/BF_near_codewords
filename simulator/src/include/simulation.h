@@ -16,13 +16,13 @@ Those are defined in this modulo to make the code more readable.
     #define SIM_LOOP int t = ERROR_WEIGHT; \
                      for (int u = U_MAX; u >= U_MIN; u -= U_STEP)
     #define SAMPLE_ERROR(data, H) sample_from_near_codeword((data)->err_support, u, (H).h1, (H).h2);
-    #define UPDATE_OUTPUT(num_errors, num_errors_improved, num_decodes, elapsed) update_out_file_mp(u, num_errors, num_errors_improved, num_decodes, elapsed);
-    #define UPDATE_LOG(num_errors, num_erros_impoved, num_decodes, my_decode_id) update_log_file_mp(u, num_errors, num_errors_improved, num_decodes, my_decode_id);
+    #define UPDATE_OUTPUT(num_errors, num_errors_improved, num_errors_new, num_decodes, elapsed) update_out_file_mp(u, num_errors, num_errors_improved, num_errors_new, num_decodes, elapsed);
+    #define UPDATE_LOG(num_errors, num_erros_impoved, num_errors_new, num_decodes, my_decode_id) update_log_file_mp(u, num_errors, num_errors_improved, num_errors_new, num_decodes, my_decode_id);
 #elif SIMULATION_TYPE == 0
     #define SIM_LOOP for (int t = T_MAX; t >= T_MIN; t -= T_STEP)
     #define SAMPLE_ERROR(data, H) sample_unique((data)->err_support, CODE_LENGTH, t);
-    #define UPDATE_OUTPUT(num_errors, num_errors_improved, num_decodes, elapsed) update_out_file_mp(t, num_errors, num_errors_improved, num_decodes, elapsed);
-    #define UPDATE_LOG(num_errors, num_erros_impoved, num_decodes, my_decode_id) update_log_file_mp(t, num_errors, num_errors_improved, num_decodes, my_decode_id);
+    #define UPDATE_OUTPUT(num_errors, num_errors_improved, num_errors_new, num_decodes, elapsed) update_out_file_mp(t, num_errors, num_errors_improved, num_errors_new, num_decodes, elapsed);
+    #define UPDATE_LOG(num_errors, num_erros_impoved, num_errors_new, num_decodes, my_decode_id) update_log_file_mp(t, num_errors, num_errors_improved, num_errors_new, num_decodes, my_decode_id);
 #endif
 
 

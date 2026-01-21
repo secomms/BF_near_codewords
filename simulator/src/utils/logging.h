@@ -49,8 +49,8 @@ void create_out_file();
  * @param num_decodes           Total number of decoding attempts performed so far.
  * @param elapsed               Total elapsed time (in seconds) for executing `num_decodes` attempts.
  */
-void update_out_file_mp(const int t, const int num_errors, const int num_errors_improved, const int num_decodes, double elapsed);
+void update_out_file_mp(const int t, const int num_errors, const int num_errors_improved, const int numer_errors_new, const int num_decodes, double elapsed);
 
-void update_log_file_mp(const int t, const int num_errors, const int num_errors_improved, const int num_decodes, int num_tx);
+void update_log_file_mp(const int t, const int num_errors, const int num_errors_improved, const int numer_errors_new, const int num_decodes, int num_tx);
 
 #endif
