@@ -83,4 +83,7 @@
 #define DECODER_TYPE 2
 
 
+#define ITER_MAX 1.5 ///< parameter for the BFmax decoder
+
+
 #endif

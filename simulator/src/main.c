@@ -158,7 +158,7 @@ int main(int argc, char* argv[]){
                 QC_compute_syndrome(H.h1, H.h2, data->err_support, t, data->syndrome);
                 
                 switch (DECODER_TYPE) {
-                    case 0: bf_max(&H, data, 2*t); break;
+                    case 0: bf_max(&H, data, floor(ITER_MAX*t)); break;
                     case 1: bf_majority(&H, data);break;
                     case 2: bf_out(&H, data); break;
                     case 3: bgf(&H, data); break;
