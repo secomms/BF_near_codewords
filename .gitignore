@@ -1,1 +1,4 @@
-Results
+build/
+Results/
+
+**/*.log
