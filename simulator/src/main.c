@@ -193,7 +193,7 @@ int main(int argc, char* argv[]){
 
 
                 int* new_err = malloc(CODE_LENGTH*sizeof(int));
-                memcpy(new_err, data->err_estimated, CODE_LENGTH*sizeof(int));
+                memcpy(new_err, data->err_estimated_improved, CODE_LENGTH*sizeof(int));
 
                 int decode_ko          = ((data->residual[0] == 0) ? check_solution(t, data->err_estimated, data->err_support) : 1);
 				int decode_ko_improved = ((data->residual[1] == 0) ? check_solution(t, data->err_estimated_improved, data->err_support) : 1);
