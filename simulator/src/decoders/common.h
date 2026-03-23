@@ -24,8 +24,6 @@ static inline unsigned long cyclic_shift(unsigned long h, unsigned long i)
     return pos - (CODE_REDUNDANCY & mask);
 }
 
-
-
 /**
  * @brief Computes the Hamming weight of a bit array.
  *
