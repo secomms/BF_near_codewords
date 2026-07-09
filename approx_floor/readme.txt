@@ -14,3 +14,6 @@ is referred to the simulation with:
 - decoder = OUT of place
 
 Each decoder has its own directory. In each directory is stored the simulation outcome in out format.
+
+
+Update this file including the number of simulations in the filename and the layout of directory.
