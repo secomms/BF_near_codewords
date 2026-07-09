@@ -12,3 +12,5 @@ is referred to the simulation with:
 - v = 11
 - seed = 0
 - decoder = OUT of place
+
+Each decoder has its own directory. In each directory is stored the simulation outcome in out format.
