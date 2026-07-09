@@ -18,7 +18,7 @@
 #define CHARS_FOR_LOOKUP   500    ///< Characters used for look-up table id
 #define INITIAL_SEED       0      ///< Seed for random number generator (0 = system time).
 
-#define NUM_DECODES_MAX    100 ///< Maximum number of decoding attempts per simulation.
+#define NUM_DECODES_MAX    10000 ///< Maximum number of decoding attempts per simulation.
 #define NUM_ERRORS_MAX     40     ///< Maximum number of error patterns tested.
 #define NUM_BACKUP         1000   ///< Frequency (in iterations) of result backups.
 #define FOLDER_FOR_RESULTS 1      ///< ID/index of the folder where results will be stored.
@@ -29,9 +29,9 @@
 // ======================================================================
 // Code Parameters
 // ======================================================================
-#define CODE_LENGTH        4006   ///< Codeword length (n).
-#define CODE_REDUNDANCY    2003   ///< Number of redundant bits (n - k).
-#define COLUMN_WEIGHT      15     ///< Column weight (w_c) of the parity-check matrix.
+#define CODE_LENGTH        24646   ///< Codeword length (n).
+#define CODE_REDUNDANCY    12323   ///< Number of redundant bits (n - k).
+#define COLUMN_WEIGHT      71     ///< Column weight (w_c) of the parity-check matrix.
 
 
 // ======================================================================
@@ -53,7 +53,7 @@
  * - 1 -> errors from nearcodeword
  * @endverbatim 
  */
-#define SIMULATION_TYPE 1 
+#define SIMULATION_TYPE 0 
 
 // ---- Error weight configuration ----/
 #define T_MIN   3    ///< Minimum error weight to simulate.
@@ -61,7 +61,7 @@
 #define T_STEP  1    ///< Step between consecutive simulated error weights.
 
 // ---- Parameters for “near-codeword” exploration ----
-#define ERROR_WEIGHT 50 ///< Specific error weight for single-weight simulations.
+#define ERROR_WEIGHT 134 ///< Specific error weight for single-weight simulations.
 
 #define U_MIN   2    ///< Minimum value of parameter U (if applicable).
 #define U_MAX   5   ///< Maximum value of parameter U.
@@ -80,7 +80,7 @@
  * - 3: BGF  
  * - 4: New BIKE decoder  
  */
-#define DECODER_TYPE 2
+#define DECODER_TYPE 0
 
 
 #define ITER_MAX 1.5 ///< parameter for the BFmax decoder

@@ -96,20 +96,16 @@ void sample_unique(unsigned long support[], size_t universe_size, size_t k){
 	//sort the vector
 	mergeSort(support, 0, k-1);
 }
+
 /**
  * @brief Samples k unique positions from the universe [0, universe_size)
  *        using rejection sampling with bitmap-based duplicate detection.
  *
- * @param[out] support       Output array of size k. Filled with k distinct
- *                           positions in [0, universe_size). Must be
- *                           pre-allocated by the caller.
- * @param[in]  universe_size Size of the universe to sample from.
- *                           Positions are drawn in [0, universe_size).
+ * @param[out] support       Output array of size k. Filled with k distinct positions in [0, universe_size).
+ * @param[in]  universe_size Size of the universe to sample from. Positions are drawn in [0, universe_size).
  * @param[in]  k             Number of unique positions to extract.
- *                           Must satisfy k <= universe_size.
  */
-void sample_unique_bitmap(unsigned long support[], size_t universe_size, size_t k)
-{
+void sample_unique_bitmap(unsigned long support[], size_t universe_size, size_t k){
 	
     size_t bitmap_size = universe_size / 8 + 1;
 	uint8_t *seen = calloc(bitmap_size, 1);
@@ -127,9 +123,6 @@ void sample_unique_bitmap(unsigned long support[], size_t universe_size, size_t 
 	// sort the vector
 	mergeSort(support, 0, k-1);
 }
-
-
-
 
 /**
  * @brief "Near codeword" refers to a situation in error-correcting codes where a received message is close to a valid codeword, but not exactly a codeword.

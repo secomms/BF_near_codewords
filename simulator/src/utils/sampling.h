@@ -13,6 +13,8 @@
  */
 void sample_unique(unsigned long support[], size_t set, size_t n);
 
+void sample_unique_bitmap(unsigned long support[], size_t set, size_t n);
+
 /**
  * @brief "Near codeword" refers to a situation in error-correcting codes where a received message is close to a valid codeword, but not exactly a codeword.
  * This function is specific for FLOOR simulation, sample error which has exactly u intersection with a random column of H.
