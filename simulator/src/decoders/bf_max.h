@@ -52,9 +52,9 @@ static inline void bf_max(DecodingMatrix* H, DecodingParams* params, const int n
 		for(int i = 0; i<COLUMN_WEIGHT; i++){
 			unsigned long row_index = 0;
 			if (pos_flip < CODE_REDUNDANCY){
-				row_index = cyclic_shift(H->h1[i], pos_flip);
+				row_index = (H->h1[i]+pos_flip)%CODE_REDUNDANCY;
 			}else{
-				row_index = cyclic_shift(H->h2[i], pos_flip);
+				row_index = (H->h2[i]+pos_flip)%CODE_REDUNDANCY;
 			}
 
 			FLIP_BIT(params->syndrome, row_index);
@@ -70,6 +70,7 @@ static inline void bf_max(DecodingMatrix* H, DecodingParams* params, const int n
 				counters[ell] += d;
 			}
 		}
+
         //at the the end of the iteration update the hamming weight
         hw = hamming_weight(params->syndrome);
 		decode_enhance_lookup(H, params, &lookup_used, &hw);

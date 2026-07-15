@@ -16,14 +16,6 @@
 // GENERLIZE THIS FUNCTION WHEN THE ERROR VECTOR WILL BECOME A BITARRAY
 
 
-static inline unsigned long cyclic_shift(unsigned long h, unsigned long i)
-{
-    // verificare per bene il tipo che si può utilizzare è uint32_t perchè unsigned long è un pò troppo
-    unsigned long pos  = h + i;
-    unsigned long mask = -(pos >= CODE_REDUNDANCY);
-    return pos - (CODE_REDUNDANCY & mask);
-}
-
 /**
  * @brief Computes the Hamming weight of a bit array.
  *
@@ -38,12 +30,11 @@ static inline size_t hamming_weight(uint8_t* arr){
 }
 
 
-// add documentation to this method
 static inline void compute_counters(const unsigned long* hi, int* counters, uint8_t* syndrome, int offset){
 
 	for(int i = 0; i<CODE_REDUNDANCY;i++){
 		for(int j = 0; j<COLUMN_WEIGHT; j++){
-			unsigned long pos = cyclic_shift(hi[j], i);
+			unsigned long pos = (hi[j]+i)%CODE_REDUNDANCY;
 			counters[offset + i] += GET_BIT(syndrome, pos);
 		}
 	}
