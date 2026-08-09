@@ -33,6 +33,10 @@
 #define CODE_REDUNDANCY    12323   ///< Number of redundant bits (n - k).
 #define COLUMN_WEIGHT      71     ///< Column weight (w_c) of the parity-check matrix.
 
+#define N0  2 
+#define P   12323
+#define V   71
+#define T   134
 
 // ======================================================================
 // Simulation Options

@@ -3,6 +3,8 @@
 
 #include "bitarray.h"
 #include "../../params.h"
+#include <cstdint>
+#include <stdint.h>
 #include <stdlib.h>
 
 /*
@@ -11,6 +13,29 @@ This module contains the definition of all the macros that will be used to perfo
 Those are defined in this modulo to make the code more readable.
 **************************************************************************************************************
 */
+
+#define POSITION_T  uint32_t
+#define DIGIT       uint64_t
+
+typedef struct {
+    POSITION_T h_0[V];          
+    POSITION_T h_1[V];           
+    POSITION_T H_first_row[N0*V];
+} sk;
+
+// modificare aggiungendo padding di allineamento a 32
+
+typedef struct {
+    DIGIT       s[P];
+    DIGIT       e_hat[N0*P];
+    DIGIT       e_hat_impv[N0*P];
+    POSITION_T  e_supp[T]; //questo ci sta da cambiarlo in base al tipo di simulazione
+    uint8_t     upc[N0*P];
+} dec;
+
+
+
+
 
 #if SIMULATION_TYPE == 1
     #define SIM_LOOP int t = ERROR_WEIGHT; \
@@ -35,6 +60,19 @@ typedef struct {
     unsigned long* h2;              /**< Second Circulant */
     unsigned long* H_first_row;     /**< First row of the matrix */
 } DecodingMatrix;
+
+
+static inline void reset_dec(dec* d, int t){
+    /* e_supp: azzera solo le posizioni usate nell'iterazione precedente, non T_MAX intere */
+    
+    memset(d->e_hat,      0, sizeof(d->e_hat));
+    memset(d->e_hat_impv, 0, sizeof(d->e_hat_impv));
+    memset(d->s,          0, sizeof(d->s));
+    memset(d->upc,        0, sizeof(d->upc));
+
+}
+
+
 
 /**
  * @struct DecodingParams
